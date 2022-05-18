@@ -45,6 +45,7 @@ class ProductController {
   String saveProduct(@ModelAttribute Product product, Model model) {
     if (!StringUtils.hasLength(product.getName())) {
       model.addAttribute("errorMsg", "Name is required");
+      model.addAttribute("productItem", product);
       return "productForm";
     }
     service.saveProduct(product);
