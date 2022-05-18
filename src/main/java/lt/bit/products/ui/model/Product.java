@@ -10,6 +10,10 @@ public class Product {
   private BigDecimal price;
   private double quantity;
 
+  public Product() {
+    this.id = UUID.randomUUID();
+  }
+
   public Product(String name, BigDecimal price, double quantity) {
     this.id = UUID.randomUUID();
     this.name = name;

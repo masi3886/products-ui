@@ -24,13 +24,11 @@ public class ProductService {
     return products;
   }
 
-  public void addProduct(Product newProduct) {
-    products.add(newProduct);
-  }
-
-  public void updateProduct(Product product) {
+  public void saveProduct(Product product) {
     Product existingProduct = findProduct(product.getId());
-    if (existingProduct != null) {
+    if (existingProduct == null) {
+      products.add(product);
+    } else {
       existingProduct.setName(product.getName());
       existingProduct.setPrice(product.getPrice());
       existingProduct.setQuantity(product.getQuantity());
