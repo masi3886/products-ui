@@ -13,11 +13,11 @@ public class ProductService {
   private List<Product> products = new ArrayList<>();
 
   public ProductService() {
-    products.add(new Product("Product1", BigDecimal.valueOf(10.5), 5));
-    products.add(new Product("Product2", BigDecimal.valueOf(12.35), 11));
-    products.add(new Product("Product3", BigDecimal.valueOf(9.07), 27));
-    products.add(new Product("Product4", BigDecimal.valueOf(3.99), 55));
-    products.add(new Product("Product5", BigDecimal.valueOf(59.78), 3));
+    products.add(new Product("Product1", BigDecimal.valueOf(10.5), 5, ""));
+    products.add(new Product("Product2", BigDecimal.valueOf(12.35), 11, ""));
+    products.add(new Product("Product3", BigDecimal.valueOf(9.07), 27, ""));
+    products.add(new Product("Product4", BigDecimal.valueOf(3.99), 55, ""));
+    products.add(new Product("Product5", BigDecimal.valueOf(59.78), 3, ""));
   }
 
   public List<Product> getProducts() {
@@ -32,6 +32,7 @@ public class ProductService {
       existingProduct.setName(product.getName());
       existingProduct.setPrice(product.getPrice());
       existingProduct.setQuantity(product.getQuantity());
+      existingProduct.setDescription(product.getDescription());
     }
   }
 
