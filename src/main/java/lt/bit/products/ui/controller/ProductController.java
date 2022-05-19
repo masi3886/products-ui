@@ -1,12 +1,15 @@
 package lt.bit.products.ui.controller;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import lt.bit.products.ui.model.Product;
 import lt.bit.products.ui.service.ProductService;
+import lt.bit.products.ui.service.error.ProductValidator;
+import lt.bit.products.ui.service.error.ValidationException;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 class ProductController {
 
-  private ProductService service;
+  private final ProductService service;
+  private final ProductValidator validator;
+  private final MessageSource messages;
 
-  ProductController(ProductService service) {
+  ProductController(ProductService service, ProductValidator validator,
+      MessageSource messages) {
     this.service = service;
+    this.validator = validator;
+    this.messages = messages;
   }
 
   @GetMapping("/products")
@@ -43,9 +51,12 @@ class ProductController {
 
   @PostMapping("/products/save")
   String saveProduct(@ModelAttribute Product product, Model model) {
-    String error = hasError(product.getName());
-    if (error != null) {
-      model.addAttribute("errorMsg", error);
+    try {
+      validator.validate(product);
+    } catch (ValidationException e) {
+      model.addAttribute("errorMsg",
+          messages.getMessage("validation.error." + e.getCode(), e.getParams(),
+              Locale.getDefault()));
       model.addAttribute("productItem", product);
       return "productForm";
     }
@@ -53,15 +64,6 @@ class ProductController {
     return "redirect:/products";
   }
 
-  private String hasError(String name) {
-    if (!StringUtils.hasLength(name)) {
-      return "Name is required";
-    }
-    if (name.length() < 3) {
-      return "Name is too short";
-    }
-    return null;
-  }
 
   @GetMapping("/products/delete")
   String deleteProduct(@RequestParam UUID id) {

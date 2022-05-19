@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-
   private List<Product> products = new ArrayList<>();
 
   public ProductService() {
