@@ -62,7 +62,7 @@ class ProductController {
   }
 
   @PostMapping("/products/save")
-  String saveProduct(@ModelAttribute Product product, Model model) {
+  String saveProduct(@ModelAttribute Product product, Model model) throws ValidationException {
     try {
       validator.validate(product);
     } catch (ValidationException e) {

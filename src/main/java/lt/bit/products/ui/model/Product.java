@@ -11,18 +11,6 @@ public class Product {
   private double quantity;
   private String description;
 
-  public Product() {
-    this.id = UUID.randomUUID();
-  }
-
-  public Product(String name, BigDecimal price, double quantity, String description) {
-    this.id = UUID.randomUUID();
-    this.name = name;
-    this.price = price;
-    this.quantity = quantity;
-    this.description = description;
-  }
-
   public UUID getId() {
     return id;
   }
