@@ -1,8 +1,11 @@
 package lt.bit.products.ui.controller;
 
+import static org.springframework.util.StringUtils.hasLength;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
 import lt.bit.products.ui.model.Product;
 import lt.bit.products.ui.service.ProductService;
 import lt.bit.products.ui.service.UserService;
@@ -34,11 +37,23 @@ class ProductController {
   }
 
   @GetMapping("/products")
-  String showProducts(Model model) {
+  String showProducts(Model model, HttpServletRequest request) {
     if (!userService.isAuthenticated()) {
       return "login";
     }
-    List<Product> products = service.getProducts();
+
+    String id = request.getParameter("id");
+    String name = request.getParameter("name");
+    List<Product> products;
+    if (hasLength(id) || hasLength(name)) {
+      products = service.findProducts(id, name);
+//      products = service.findProductsWithQuery(id, name);
+    } else {
+      products = service.getProducts();
+    }
+
+    model.addAttribute("searchCriteriaId", id);
+    model.addAttribute("searchCriteriaName", name);
     model.addAttribute("productItems", products);
     return "productList";
   }

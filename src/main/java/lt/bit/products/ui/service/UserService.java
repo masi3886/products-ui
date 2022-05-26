@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("authenticated")
 public class UserService {
 
-  boolean authenticated;
+  boolean authenticated = true; // FIXME: remove true
 
   public boolean isAuthenticated() {
     return authenticated;

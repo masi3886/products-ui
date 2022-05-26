@@ -13,6 +13,16 @@
     <th>Quantity</th>
     <th>Actions</th>
   </tr>
+  <tr>
+    <td colspan="4">
+      <form method="get" th:action="@{/products}">
+        Id: <input type="text" name="id" th:value="${searchCriteriaId}">
+        Name: <input type="text" name="name" th:value="${searchCriteriaName}">
+        <input type="submit" value="Search">
+        <input type="reset" value="Reset" onclick="window.location.href='/products'">
+      </form>
+    </td>
+  </tr>
   <tr th:each="item : ${productItems}">
     <td th:text="${item.id}">
     <td th:text="${item.name}">
