@@ -32,8 +32,9 @@ class UserController {
   String login(HttpServletRequest request, Model model) {
     String username = request.getParameter("username");
     String password = request.getParameter("password");
-    if (username.equals("admin") && password.equals("123")) {
-      userService.setAuthenticated(true);
+    userService.login(username, password);
+
+    if (userService.isAuthenticated()) {
       return "redirect:/products";
     }
     model.addAttribute("errorMsg",
@@ -43,7 +44,7 @@ class UserController {
 
   @GetMapping("/auth/logout")
   String logout() {
-    userService.setAuthenticated(false);
+    userService.logout();
     return "login";
   }
 }

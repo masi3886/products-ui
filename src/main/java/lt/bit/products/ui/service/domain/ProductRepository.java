@@ -22,5 +22,4 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
       @Param("name") String name,
       @Param("id") UUID uuid
   );
-
 }
