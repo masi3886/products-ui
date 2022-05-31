@@ -17,7 +17,8 @@ CREATE TABLE products (
     price NUMERIC(20, 2),
     quantity NUMERIC(5, 2),
     description VARCHAR(255),
-    supplier_id UUID FOREIGN KEY REFERENCES suppliers(id)
+    supplier_id UUID,
+    FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
 );
 
 INSERT INTO products (id, name, price, quantity, description)
