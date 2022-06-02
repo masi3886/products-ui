@@ -1,6 +1,7 @@
 package lt.bit.products.ui.controller;
 
 import java.util.List;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import lt.bit.products.ui.model.Supplier;
 import lt.bit.products.ui.service.SupplierService;
@@ -8,6 +9,7 @@ import lt.bit.products.ui.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class SupplierController {
@@ -30,5 +32,14 @@ public class SupplierController {
 
     model.addAttribute("supplierItems", suppliers);
     return "supplierList";
+  }
+
+  @GetMapping("/suppliers/{id}")
+  String editSupplier(@PathVariable UUID id, Model model) {
+    if (!userService.isAuthenticated()) {
+      return "login";
+    }
+    model.addAttribute("supplierItem", service.getSupplier(id));
+    return "supplierForm";
   }
 }

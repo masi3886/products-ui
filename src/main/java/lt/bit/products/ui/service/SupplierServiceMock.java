@@ -14,4 +14,9 @@ public class SupplierServiceMock implements SupplierService {
   public List<Supplier> getSuppliers() {
     return MOCKED_SUPPLIERS;
   }
+
+  @Override
+  public Supplier getSupplier(UUID id) {
+    return MOCKED_SUPPLIERS.stream().filter(s -> s.getId().equals(id)).findAny().orElseThrow();
+  }
 }

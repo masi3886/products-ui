@@ -1,6 +1,7 @@
 package lt.bit.products.ui.service;
 
 import java.util.List;
+import java.util.UUID;
 import lt.bit.products.ui.model.Supplier;
 import lt.bit.products.ui.service.domain.SupplierEntity;
 import lt.bit.products.ui.service.domain.SupplierRepository;
@@ -24,5 +25,10 @@ public class SupplierServiceH2 implements SupplierService {
     // @formatter:off
     return mapper.map(suppliers, new TypeToken<List<Supplier>>() {}.getType());
     // @formatter:on
+  }
+
+  @Override
+  public Supplier getSupplier(UUID id) {
+    return repository.findById(id).map(s -> mapper.map(s, Supplier.class)).orElseThrow();
   }
 }
