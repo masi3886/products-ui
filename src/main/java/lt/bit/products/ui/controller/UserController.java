@@ -23,7 +23,7 @@ class UserController {
   @GetMapping("/auth/login")
   String loginForm() {
     if (userService.isAuthenticated()) {
-      return "redirect:/products";
+      return "redirect:/";
     }
     return "login";
   }
@@ -35,7 +35,7 @@ class UserController {
     userService.login(username, password);
 
     if (userService.isAuthenticated()) {
-      return "redirect:/products";
+      return "redirect:/";
     }
     model.addAttribute("errorMsg",
         messages.getMessage("login.error.INVALID_CREDENTIALS", null, Locale.getDefault()));

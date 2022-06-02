@@ -78,6 +78,7 @@ class ProductController {
       return "login";
     }
     model.addAttribute("productItem", new Product());
+    model.addAttribute("suppliers", supplierService.getSuppliers());
     return "productForm";
   }
 
