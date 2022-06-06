@@ -1,8 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-</head>
+<head th:replace="fragments/head.html"></head>
 <body>
+<header th:insert="fragments/navbar.html"></header>
 <span style="color: #CC0000" th:text="${errorMsg}"></span>
 <form method="post" th:action="@{/products/save}" th:object="${productItem}">
   <label>Name: </label><input type="text" th:field="*{name}">
