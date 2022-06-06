@@ -97,7 +97,6 @@ class ProductController {
     return "redirect:/products";
   }
 
-
   @GetMapping("/products/delete")
   String deleteProduct(@RequestParam UUID id) {
     if (!userService.isAuthenticated()) {

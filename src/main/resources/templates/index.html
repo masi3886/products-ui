@@ -1,10 +1,7 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head.html"></head>
 <body>
-<!--  <a href="/auth/login">[Log In]</a>-->
-<a href="/products">Products</a>
-<a href="/suppliers">Suppliers</a>
-<a href="/users">Users</a>
+  <header th:insert="fragments/navbar.html"></header>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package lt.bit.products.ui.service.configuration;
+package lt.bit.products.ui.configuration;
 
 import lt.bit.products.ui.service.SupplierService;
 import lt.bit.products.ui.service.SupplierServiceH2;
@@ -8,9 +8,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-class GlobalConfiguration {
+@EnableWebMvc
+class GlobalConfiguration implements WebMvcConfigurer {
 
   @Bean
   ModelMapper modelMapper() {
@@ -26,5 +30,10 @@ class GlobalConfiguration {
   @Bean("supplierServiceMock")
   SupplierService supplierServiceMock() {
     return new SupplierServiceMock();
+  }
+
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
   }
 }

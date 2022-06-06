@@ -9,4 +9,6 @@ public interface SupplierService {
   List<Supplier> getSuppliers();
 
   Supplier getSupplier(UUID id);
+
+  void saveSupplier(Supplier supplier);
 }
