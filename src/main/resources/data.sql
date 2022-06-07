@@ -18,6 +18,7 @@ CREATE TABLE products (
     quantity NUMERIC(5, 2),
     description VARCHAR(255),
     supplier_id UUID,
+    image BLOB(5K),
     FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
 );
 

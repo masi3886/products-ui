@@ -7,7 +7,7 @@
 <div class="container">
   <span style="color: #CC0000" th:text="${errorMsg}"></span>
 
-  <form  method="post" th:action="@{/products/save}" th:object="${productItem}">
+  <form  method="post" th:action="@{/products/save}" th:object="${productItem}" enctype="multipart/form-data">
     <div class="row g-3">
       <div class="col-auto">
         <label for="name" class="col-sm-2 col-form-label">Name:</label>
@@ -30,7 +30,7 @@
       </div>
       <div class="col-auto">
         <label for="imageFile" class="col-sm-2 col-form-label">Image: </label>
-        <input class="form-control" type="file" id="imageFile">
+        <input class="form-control" type="file" id="imageFile" name="imageFile">
       </div>
     </div>
     <div class="row g-3"><br><br></div>

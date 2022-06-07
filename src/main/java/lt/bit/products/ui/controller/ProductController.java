@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 class ProductController {
@@ -83,7 +85,9 @@ class ProductController {
   }
 
   @PostMapping("/products/save")
-  String saveProduct(@ModelAttribute Product product, Model model) throws ValidationException {
+  String saveProduct(@ModelAttribute Product product, @RequestPart("imageFile") MultipartFile file,
+      Model model) throws ValidationException {
+    System.out.println("FILE: " + file.getName());
     try {
       validator.validate(product);
     } catch (ValidationException e) {

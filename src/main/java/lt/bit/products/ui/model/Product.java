@@ -10,6 +10,7 @@ public class Product {
   private BigDecimal price;
   private double quantity;
   private String description;
+  private byte[] image;
   private UUID supplierId;
 
   public UUID getId() {
@@ -50,6 +51,14 @@ public class Product {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public byte[] getImage() {
+    return image;
+  }
+
+  public void setImage(byte[] image) {
+    this.image = image;
   }
 
   public UUID getSupplierId() {
