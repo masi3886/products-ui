@@ -36,7 +36,8 @@ public class ProductEntity implements Serializable {
   private BigDecimal price;
   private double quantity;
   private String description;
-  private byte[] image;
+  private String imageName;
+  private byte[] imageFileContents;
   private UUID supplierId;
 
   public UUID getId() {
@@ -79,12 +80,20 @@ public class ProductEntity implements Serializable {
     this.description = description;
   }
 
-  public byte[] getImage() {
-    return image;
+  public String getImageName() {
+    return imageName;
   }
 
-  public void setImage(byte[] image) {
-    this.image = image;
+  public void setImageName(String imageName) {
+    this.imageName = imageName;
+  }
+
+  public byte[] getImageFileContents() {
+    return imageFileContents;
+  }
+
+  public void setImageFileContents(byte[] imageFileContents) {
+    this.imageFileContents = imageFileContents;
   }
 
   public UUID getSupplierId() {

@@ -2,6 +2,7 @@ package lt.bit.products.ui.controller;
 
 import static org.springframework.util.StringUtils.hasLength;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -85,18 +86,30 @@ class ProductController {
   }
 
   @PostMapping("/products/save")
-  String saveProduct(@ModelAttribute Product product, @RequestPart("imageFile") MultipartFile file,
-      Model model) throws ValidationException {
-    System.out.println("FILE: " + file.getName());
+  String saveProduct(@ModelAttribute Product product,
+      @RequestPart(name = "imageFile", required = false) MultipartFile file, Model model)
+      throws ValidationException {
+
     try {
       validator.validate(product);
+      if (file != null && !file.isEmpty()) {
+        // TODO: validator.validate(file);
+        product.setImageName(file.getOriginalFilename());
+        product.setImageFileContents(file.getBytes());
+      }
     } catch (ValidationException e) {
       model.addAttribute("errorMsg",
           messages.getMessage("validation.error." + e.getCode(), e.getParams(),
               Locale.getDefault()));
       model.addAttribute("productItem", product);
       return "productForm";
+    } catch (IOException ioe) {
+      model.addAttribute("errorMsg",
+          messages.getMessage("system.error.FILE_UPLOAD", null, Locale.getDefault()));
+      model.addAttribute("productItem", product);
+      return "productForm";
     }
+
     service.saveProduct(product);
     return "redirect:/products";
   }
