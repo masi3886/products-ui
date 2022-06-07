@@ -3,7 +3,6 @@
 <head th:replace="fragments/head.html"></head>
 <body>
   <header th:insert="fragments/navbar.html"></header>
-  <br>
   <form method="get" style="margin-left: 2px" th:action="@{/products}">
     Id: <input type="text" name="id" th:value="${searchCriteriaId}">&nbsp;&nbsp;
     Name: <input type="text" name="name" th:value="${searchCriteriaName}">
