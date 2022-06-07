@@ -93,7 +93,7 @@ class ProductController {
     try {
       validator.validate(product);
       if (file != null && !file.isEmpty()) {
-        // TODO: validator.validate(file);
+        validator.validate(file);
         product.setImageName(file.getOriginalFilename());
         product.setImageFileContents(file.getBytes());
       }
