@@ -10,7 +10,7 @@ public class UserService {
 
   private final UserRepository repository;
 
-  boolean authenticated = true; // FIXME
+  boolean authenticated;
 
   public UserService(UserRepository repository) {
     this.repository = repository;
