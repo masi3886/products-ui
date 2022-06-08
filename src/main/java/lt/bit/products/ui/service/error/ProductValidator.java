@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductValidator {
 
   private static final Set<String> SUPPORTED_FILE_TYPES = Set.of("image/jpeg", "image/png");
-  private static final long MAX_FILE_SIZE = 10 * 1024;
+  private static final long MAX_FILE_SIZE = 10 * 1024 * 1024;
 
   public void validate(Product product) throws ValidationException {
     validateName(product.getName());

@@ -14,6 +14,9 @@ import lt.bit.products.ui.service.UserService;
 import lt.bit.products.ui.service.error.ProductValidator;
 import lt.bit.products.ui.service.error.ValidationException;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,6 +78,14 @@ class ProductController {
     return "productForm";
   }
 
+  @GetMapping("/products/{id}/image.png")
+  ResponseEntity<byte[]> getProductImage(@PathVariable UUID id) {
+    Product product = service.getProduct(id);
+    HttpHeaders headers = new HttpHeaders();
+    headers.add(HttpHeaders.CONTENT_TYPE, product.getImageContentType());
+    return new ResponseEntity<>(product.getImageFileContents(), headers, HttpStatus.OK);
+  }
+
   @GetMapping("/products/add")
   String addProduct(Model model) {
     if (!userService.isAuthenticated()) {
@@ -95,6 +106,7 @@ class ProductController {
       if (file != null && !file.isEmpty()) {
         validator.validate(file);
         product.setImageName(file.getOriginalFilename());
+        product.setImageContentType(file.getContentType());
         product.setImageFileContents(file.getBytes());
       }
     } catch (ValidationException e) {

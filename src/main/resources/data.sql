@@ -19,7 +19,8 @@ CREATE TABLE products (
     description VARCHAR(255),
     supplier_id UUID,
     image_name VARCHAR(50),
-    image_file_contents BLOB(10K),
+    image_content_type VARCHAR(20),
+    image_file_contents BLOB(10M),
     FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
 );
 

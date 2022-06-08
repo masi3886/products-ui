@@ -11,6 +11,7 @@ public class Product {
   private double quantity;
   private String description;
   private String imageName;
+  private String imageContentType;
   private byte[] imageFileContents;
   private UUID supplierId;
 
@@ -60,6 +61,14 @@ public class Product {
 
   public void setImageName(String imageName) {
     this.imageName = imageName;
+  }
+
+  public String getImageContentType() {
+    return imageContentType;
+  }
+
+  public void setImageContentType(String imageContentType) {
+    this.imageContentType = imageContentType;
   }
 
   public byte[] getImageFileContents() {
