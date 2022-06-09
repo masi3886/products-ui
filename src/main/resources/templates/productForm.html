@@ -30,6 +30,7 @@
       </div>
       <div class="col-auto">
         <label for="imageFile" class="col-sm-2 col-form-label">Image: </label>
+        <img height="25" th:alt="*{imageName}" th:title="*{imageName}" th:src="@{'/products/' + *{id} + '/image.png' }">
         <input class="form-control" type="file" id="imageFile" name="imageFile">
       </div>
     </div>
@@ -43,6 +44,7 @@
     <div class="row g-3">
       <div class="col-auto">
         <button class="btn btn-primary mb-3" type="submit">Save</button>
+        <button class="btn btn-secondary mb-3" type="button" onclick="history.back()">Back</button>
         <input type="hidden" th:field="*{id}">
       </div>
     </div>

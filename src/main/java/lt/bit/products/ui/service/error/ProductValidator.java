@@ -46,7 +46,21 @@ public class ProductValidator {
 
   private void validateFileSize(long size) throws ValidationException {
     if (MAX_FILE_SIZE <= size) {
-      throw new ValidationException(ErrorCode.FILE_TOO_LARGE, MAX_FILE_SIZE);
+      throw new ValidationException(ErrorCode.FILE_TOO_LARGE, formattedFileSize(MAX_FILE_SIZE));
     }
+  }
+
+  private String formattedFileSize(long sizeInBytes) {
+    int divider = 1024;
+    long sizeInKb = sizeInBytes / divider;
+    if (sizeInKb == 0) {
+      return sizeInBytes + "B";
+    }
+
+    long sizeInMb = sizeInKb / divider;
+    if (sizeInMb == 0) {
+      return sizeInKb + "Kb";
+    }
+    return sizeInMb + "Mb";
   }
 }
