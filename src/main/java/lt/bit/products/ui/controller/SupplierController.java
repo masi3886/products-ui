@@ -28,7 +28,7 @@ public class SupplierController {
   }
 
   @GetMapping("/suppliers")
-  String showProducts(Model model, HttpServletRequest request) {
+  String showSuppliers(Model model) {
     if (!userService.isAuthenticated()) {
       return "login";
     }
@@ -49,7 +49,7 @@ public class SupplierController {
   }
 
   @PostMapping("/suppliers/save")
-  String saveProduct(@ModelAttribute Supplier supplier, Model model) throws ValidationException {
+  String saveSupplier(@ModelAttribute Supplier supplier, Model model) throws ValidationException {
 /*    try {
       validator.validate(product);
     } catch (ValidationException e) {
