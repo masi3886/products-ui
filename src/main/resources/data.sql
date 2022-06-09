@@ -50,3 +50,5 @@ CREATE TABLE users (
 );
 
 INSERT INTO users VALUES (1, 'admin', '123', 'ADMIN', 'ACTIVE', '2022-05-30', LOCALTIMESTAMP());
+INSERT INTO users VALUES (2, 'a1', 'a', 'USER', 'ACTIVE', '2022-06-09', NULL);
+INSERT INTO users VALUES (3, 'b2', 'b', 'USER', 'ACTIVE', '2022-06-09', NULL);
