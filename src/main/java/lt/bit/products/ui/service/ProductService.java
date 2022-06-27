@@ -35,6 +35,10 @@ public class ProductService {
     // @formatter:on
   }
 
+  public long countProducts() {
+    return repository.count();
+  }
+
   public void saveProduct(Product product) throws ValidationException {
     UUID id = product.getId();
     if (id != null && !repository.existsById(id)) {
