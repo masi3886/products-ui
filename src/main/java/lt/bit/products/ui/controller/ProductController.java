@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-class ProductController {
+class ProductController extends ControllerBase {
 
   private final ProductService service;
   private final UserService userService;
