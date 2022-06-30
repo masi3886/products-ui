@@ -63,6 +63,6 @@ class SupplierController extends ControllerBase {
       return "productForm";
     }*/
     service.saveSupplier(supplier);
-    return "redirect:" + SUPPLIERS_PATH;
+    return "redirect:" + ADMIN_PATH + SUPPLIERS_PATH;
   }
 }
