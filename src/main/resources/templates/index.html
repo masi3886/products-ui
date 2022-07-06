@@ -42,7 +42,7 @@
     </button>
     <ul id="cart" style="display: none; margin-left: 20px;">
       <li th:each="cartItem : ${cartItems}">
-        <a th:text="${cartItem.productName}"></a>
+        <a th:text="${cartItem.productName + ' - ' +  cartItem.count + ' x ' + cartItem.productPrice + ' &euro; =' + cartItem.totalPrice + ' &euro;'}"></a>
       </li>
     </ul>
   </div>

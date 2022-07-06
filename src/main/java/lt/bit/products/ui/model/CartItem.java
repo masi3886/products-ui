@@ -44,8 +44,7 @@ public class CartItem {
   }
 
   public BigDecimal getTotalPrice() {
-    BigDecimal.valueOf(getCount());
-    return BigDecimal.ZERO;
+    return productPrice.multiply(BigDecimal.valueOf(getCount()));
   }
 
   public BigDecimal getProductPrice() {
