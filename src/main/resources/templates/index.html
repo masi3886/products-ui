@@ -10,12 +10,15 @@
 
     $('button.addCartBtn').on('click', function () {
       const productId = $(this).val();
-      const productName = $(this).attr('title');
+      const productNameAndPrice = $(this).attr('title');
+      const productNameAndPriceArr = productNameAndPrice.split('|');
+      const productName = productNameAndPriceArr[0];
+      const productPrice = productNameAndPriceArr[1];
 
       $.ajax({
         url: "/cart/add",
         type: "POST",
-        data: {productId: productId, productName: productName},
+        data: {productId: productId, productName: productName, productPrice: productPrice},
         cache: false,
         async: true,
         success: function (data) {
@@ -43,7 +46,7 @@
     <div class="col" th:each="item : ${products}">
       <b><span th:text="${item.name}"></span></b><br>
       <span th:text="${item.price}"></span> &euro;<br>
-      <button type="button" class="addCartBtn btn btn-outline-danger mb-3" th:title="${item.name}" th:value="${item.id}">Add to Cart</button>
+      <button type="button" class="addCartBtn btn btn-outline-danger mb-3" th:title="${item.name + '|' + item.price.doubleValue()}" th:value="${item.id}">Add to Cart</button>
     </div>
   </div>
 </div>
