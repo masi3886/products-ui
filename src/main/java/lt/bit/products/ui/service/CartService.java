@@ -1,9 +1,11 @@
 package lt.bit.products.ui.service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lt.bit.products.ui.model.CartItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,8 @@ public class CartService {
   }
 
   public List<CartItem> getCartItems() {
-    return List.of(new CartItem(UUID.randomUUID(), "test", 2));
+    return this.cartItems.values().stream()
+        .sorted(Comparator.comparing(CartItem::getProductName))
+        .collect(Collectors.toList());
   }
 }
