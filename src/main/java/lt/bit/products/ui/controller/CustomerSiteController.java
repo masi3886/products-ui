@@ -1,5 +1,6 @@
 package lt.bit.products.ui.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import lt.bit.products.ui.model.CartItem;
@@ -24,8 +25,9 @@ class CustomerSiteController {
 
   @PostMapping("/cart/add")
   @ResponseBody
-  ModelAndView addToCart(@RequestParam UUID productId, @RequestParam String productName) {
-    cartService.addToCart(productId, productName);
+  ModelAndView addToCart(@RequestParam UUID productId, @RequestParam String productName,
+      @RequestParam BigDecimal productPrice) {
+    cartService.addToCart(productId, productName, productPrice);
     List<CartItem> cartItems = cartService.getCartItems();
     ModelAndView mv = new ModelAndView("cartItems");
     mv.addObject("cartItems", cartItems);

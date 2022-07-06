@@ -1,16 +1,19 @@
 package lt.bit.products.ui.model;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class CartItem {
 
   private UUID productId;
   private String productName;
+  private BigDecimal productPrice;
   private int count;
 
-  public CartItem(UUID productId, String productName, int count) {
+  public CartItem(UUID productId, String productName, BigDecimal productPrice, int count) {
     this.productId = productId;
     this.productName = productName;
+    this.productPrice = productPrice;
     this.count = count;
   }
 
@@ -37,6 +40,20 @@ public class CartItem {
 
   public CartItem setProductName(String productName) {
     this.productName = productName;
+    return this;
+  }
+
+  public BigDecimal getTotalPrice() {
+    BigDecimal.valueOf(getCount());
+    return BigDecimal.ZERO;
+  }
+
+  public BigDecimal getProductPrice() {
+    return productPrice;
+  }
+
+  public CartItem setProductPrice(BigDecimal productPrice) {
+    this.productPrice = productPrice;
     return this;
   }
 

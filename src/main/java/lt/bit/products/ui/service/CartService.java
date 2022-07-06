@@ -1,5 +1,6 @@
 package lt.bit.products.ui.service;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -19,13 +20,13 @@ public class CartService {
   private static final Logger LOG = LoggerFactory.getLogger(CartService.class);
   private Map<UUID, CartItem> cartItems = new HashMap<>();
 
-  public void addToCart(UUID productId, String productName) {
+  public void addToCart(UUID productId, String productName, BigDecimal productPrice) {
     CartItem item;
     if (cartItems.containsKey(productId)) {
       item = cartItems.get(productId);
       item.setCount(item.getCount() + 1);
     } else {
-      item = new CartItem(productId, productName, 1);
+      item = new CartItem(productId, productName, productPrice, 1);
     }
     cartItems.put(productId, item);
     LOG.info("Cart: " + cartItems);
