@@ -1,5 +1,7 @@
 package lt.bit.products.ui.controller;
 
+import java.util.List;
+import lt.bit.products.ui.model.CartItem;
 import lt.bit.products.ui.service.CartService;
 import lt.bit.products.ui.service.ProductService;
 import lt.bit.products.ui.service.UserService;
@@ -22,8 +24,10 @@ class IndexController extends ControllerBase {
 
   @GetMapping("/")
   String index(Model model) {
+    List<CartItem> cartItems = cartService.getCartItems();
+    model.addAttribute("totalCartItems", cartItems.stream().mapToInt(CartItem::getCount).sum());
+    model.addAttribute("cartItems", cartItems);
     model.addAttribute("products", productService.getProducts());
-    model.addAttribute("cartItems", cartService.getCartItems());
     return "index";
   }
 
