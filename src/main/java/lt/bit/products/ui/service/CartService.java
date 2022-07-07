@@ -37,4 +37,8 @@ public class CartService {
         .sorted(Comparator.comparing(CartItem::getProductName))
         .collect(Collectors.toList());
   }
+
+  public void removeFromCart(UUID productId) {
+    cartItems.remove(productId);
+  }
 }
