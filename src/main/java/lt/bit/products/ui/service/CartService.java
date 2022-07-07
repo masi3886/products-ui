@@ -41,4 +41,14 @@ public class CartService {
   public void removeFromCart(UUID productId) {
     cartItems.remove(productId);
   }
+
+  public int getTotalItems() {
+    return cartItems.values().stream().mapToInt(CartItem::getCount).sum();
+  }
+
+  public BigDecimal getCartAmount() {
+    return cartItems.values().stream()
+        .map(CartItem::getTotalPrice)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
 }

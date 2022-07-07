@@ -11,17 +11,20 @@
       type: 'GET',
       cache: false,
       async: true,
-      success: function (count) {
+      success: function (data) {
         $('#li_' + productId).hide();
-        $('#cartCounter').text(count);
+        $('#cartCounter').text(data);
+        $.get('/cart/amount', function (amount) {
+          $('#cartAmount').text(amount);
+        });
       }
     });
   };
 
   $(document).ready(function () {
-    /*$('#cartContainer').on('click', function () {
+    $('#cartBtn').on('click', function () {
       $('#cart').toggle();
-    });*/
+    });
 
     $('button.addCartBtn').on('click', function () {
       const productId = $(this).val();
@@ -40,8 +43,10 @@
           const cartCounter = '#cartCounter';
           $(cartCounter).text(+($(cartCounter).text()) + 1);
           $('#cart').html(data);
-
           $('.removeCartBtn').bind('click', cartItemRemoveListener);
+          $.get('/cart/amount', function (amount) {
+            $('#cartAmount').text(amount);
+          });
         }
      });
     });
@@ -50,16 +55,16 @@
   });
 </script>
 <div class="container">
-  <div id="cartContainer" class="row">
-    <button type="button" class="btn btn-outline-danger mb-3">
+  <div class="row">
+    <button id="cartBtn" type="button" class="btn btn-outline-danger mb-3">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
            viewBox="0 0 16 16">
         <path
             d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
       </svg>
-      Cart (<span id="cartCounter" th:text="${totalCartItems}"></span>)
+      Cart (<span id="cartCounter" th:text="${totalCartItems}"></span>) - <span id="cartAmount" th:text="${cartAmount}"></span> &euro;
     </button>
-    <ul id="cart" style="display: block; margin-left: 20px;">
+    <ul id="cart" style="display: none; margin-left: 20px;">
       <th:block th:each="cartItem : ${cartItems}">
         <li th:id="${'li_' + cartItem.productId}">
           <a th:text="${cartItem.productName + ' - ' +  cartItem.count + ' x ' + cartItem.productPrice + ' &euro; = ' + cartItem.totalPrice + ' &euro;'}"></a>

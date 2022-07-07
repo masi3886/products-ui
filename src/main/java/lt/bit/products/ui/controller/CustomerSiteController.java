@@ -28,6 +28,7 @@ class CustomerSiteController {
   ModelAndView addToCart(@RequestParam UUID productId, @RequestParam String productName,
       @RequestParam BigDecimal productPrice) {
     cartService.addToCart(productId, productName, productPrice);
+    cartService.getCartAmount();
     return getCartItemsWithModelAndView();
   }
 
@@ -35,7 +36,13 @@ class CustomerSiteController {
   @ResponseBody
   int removeFromCart(@PathVariable("id") UUID productId) {
     cartService.removeFromCart(productId);
-    return 5;
+    return cartService.getTotalItems();
+  }
+
+  @GetMapping("/cart/amount")
+  @ResponseBody
+  BigDecimal getCartAmount() {
+    return cartService.getCartAmount();
   }
 
   private ModelAndView getCartItemsWithModelAndView() {
