@@ -33,9 +33,9 @@ class CustomerSiteController {
 
   @GetMapping("/cart/{id}/remove")
   @ResponseBody
-  ModelAndView removeFromCart(@PathVariable("id") UUID productId) {
+  int removeFromCart(@PathVariable("id") UUID productId) {
     cartService.removeFromCart(productId);
-    return getCartItemsWithModelAndView();
+    return 5;
   }
 
   private ModelAndView getCartItemsWithModelAndView() {
