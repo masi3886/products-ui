@@ -11,13 +11,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Service
-@SessionAttributes("authenticated")
+@SessionAttributes({"authenticated", "admin", "userId", "userName"})
 public class UserService {
 
   private final UserRepository repository;
   private final ModelMapper mapper;
 
   private boolean authenticated;
+  private boolean admin;
+  private Integer userId;
+  private String userName;
 
   public UserService(UserRepository repository, ModelMapper mapper) {
     this.repository = repository;
@@ -40,6 +43,30 @@ public class UserService {
 
   private void setAuthenticated(boolean authenticated) {
     this.authenticated = authenticated;
+  }
+
+  public boolean isAdmin() {
+    return admin;
+  }
+
+  private void setAdmin(boolean admin) {
+    this.admin = admin;
+  }
+
+  public Integer getUserId() {
+    return userId;
+  }
+
+  private void setUserId(Integer userId) {
+    this.userId = userId;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  private void setUserName(String userName) {
+    this.userName = userName;
   }
 
   public List<User> getUsers() {

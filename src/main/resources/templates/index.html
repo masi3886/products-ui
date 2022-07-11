@@ -22,24 +22,28 @@
   };
 
   const cartItemCountListener = function () {
-    const itemsCount = $(this).val();
+    const itemCount = $(this).val();
     const productId = $(this).attr('itemid');
+    let counterVal = 0;
 
-    $.ajax({
-      url: '/cart/items/count',
-      type: 'POST',
-      data: {productId: productId, itemsCount: itemsCount, productPrice: 0},
-      cache: false,
-      async: true,
-      success: function (data) {
-        const cartCounter = '#cartCounter';
-        //$(cartCounter).text(+($(cartCounter).text()) + 1);
-        $('#cart').html(data);
-        $.get('/cart/amount', function (amount) {
-          $('#cartAmount').text(amount);
-        });
-      }
+    $('input.updateCountField').each(function () {
+      counterVal = +counterVal + +$(this).val();
     });
+    $('#cartCounter').text(counterVal);
+
+     $.ajax({
+       url: '/cart/items/count',
+       type: 'POST',
+       data: {productId: productId, itemCount: itemCount},
+       cache: false,
+       async: true,
+       success: function (data) {
+         $('#cart').html(data);
+         $.get('/cart/amount', function (amount) {
+           $('#cartAmount').text(amount);
+         });
+       }
+     });
   };
 
   $(document).ready(function () {
