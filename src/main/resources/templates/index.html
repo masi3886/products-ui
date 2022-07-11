@@ -21,6 +21,27 @@
     });
   };
 
+  const cartItemCountListener = function () {
+    const itemsCount = $(this).val();
+    const productId = $(this).attr('itemid');
+
+    $.ajax({
+      url: '/cart/items/count',
+      type: 'POST',
+      data: {productId: productId, itemsCount: itemsCount, productPrice: 0},
+      cache: false,
+      async: true,
+      success: function (data) {
+        const cartCounter = '#cartCounter';
+        //$(cartCounter).text(+($(cartCounter).text()) + 1);
+        $('#cart').html(data);
+        $.get('/cart/amount', function (amount) {
+          $('#cartAmount').text(amount);
+        });
+      }
+    });
+  };
+
   $(document).ready(function () {
     $('#cartBtn').on('click', function () {
       $('#cart').toggle();
@@ -43,7 +64,9 @@
           const cartCounter = '#cartCounter';
           $(cartCounter).text(+($(cartCounter).text()) + 1);
           $('#cart').html(data);
+
           $('.removeCartBtn').bind('click', cartItemRemoveListener);
+          $('input.updateCountField').bind('change', cartItemCountListener);
           $.get('/cart/amount', function (amount) {
             $('#cartAmount').text(amount);
           });
@@ -52,6 +75,7 @@
     });
 
     $('.removeCartBtn').on('click', cartItemRemoveListener);
+    $('input.updateCountField').on('change', cartItemCountListener());
   });
 </script>
 <div class="container">
@@ -67,7 +91,11 @@
     <ul id="cart" style="display: none; margin-left: 20px;">
       <th:block th:each="cartItem : ${cartItems}">
         <li th:id="${'li_' + cartItem.productId}">
-          <a th:text="${cartItem.productName + ' - ' +  cartItem.count + ' x ' + cartItem.productPrice + ' &euro; = ' + cartItem.totalPrice + ' &euro;'}"></a>
+          <span th:text="${cartItem.productName + ' - '}"></span>
+          <input type="number" min="1" class="updateCountField" th:itemid="${cartItem.productId}"
+                 style="width: 50px; height: 25px; padding: 3px;" th:value="${cartItem.count}">
+          <span th:text="${' x ' + cartItem.productPrice + ' &euro; = '}"></span>
+          <span th:text="${cartItem.totalPrice}"></span> &euro;
           <a class="removeCartBtn" href="#" th:itemid="${cartItem.productId}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                  viewBox="0 0 16 16">
