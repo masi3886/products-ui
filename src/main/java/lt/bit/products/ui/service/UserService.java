@@ -1,6 +1,7 @@
 package lt.bit.products.ui.service;
 
 import java.util.List;
+import java.util.Optional;
 import lt.bit.products.ui.model.User;
 import lt.bit.products.ui.service.domain.UserEntity;
 import lt.bit.products.ui.service.domain.UserRepository;
@@ -28,13 +29,20 @@ public class UserService {
   }
 
   public void login(String username, String password) {
-    if (repository.existsByUsernameAndPasswordAndRole(username, password, UserRole.ADMIN)) {
+    Optional<UserEntity> user = repository.findByUsernameAndPassword(username, password);
+    user.ifPresent(u -> {
       setAuthenticated(true);
-    }
+      setAdmin(u.getRole() == UserRole.ADMIN);
+      setUserId(u.getId());
+      setUserName(u.getUsername());
+    });
   }
 
   public void logout() {
     setAuthenticated(false);
+    setAdmin(false);
+    setUserId(null);
+    setUserName(null);
   }
 
   public boolean isAuthenticated() {

@@ -37,6 +37,6 @@ class IndexController extends ControllerBase {
     if (!userService.isAuthenticated()) {
       return "login";
     }
-    return "admin/index";
+    return userService.isAdmin() ? "admin/index" : "index";
   }
 }
