@@ -9,9 +9,11 @@ import lt.bit.products.ui.service.domain.UserRole;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Service
+@Transactional
 @SessionAttributes({"authenticated", "admin", "userId", "userName"})
 public class UserService {
 
@@ -86,5 +88,9 @@ public class UserService {
 
   public User getUser(Integer id) {
     return repository.findById(id).map(u -> mapper.map(u, User.class)).orElseThrow();
+  }
+
+  public void saveUser(User user) {
+    repository.save(mapper.map(user, UserEntity.class));
   }
 }
