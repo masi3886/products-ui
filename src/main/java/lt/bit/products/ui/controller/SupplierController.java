@@ -52,6 +52,15 @@ class SupplierController extends ControllerBase {
     return "admin/supplierForm";
   }
 
+  @GetMapping("/add")
+  String addSupplier(Model model) {
+    if (!userService.isAuthenticated()) {
+      return "login";
+    }
+    model.addAttribute("supplierItem", new Supplier());
+    return "admin/supplierForm";
+  }
+
   @PostMapping("/save")
   String saveSupplier(@ModelAttribute Supplier supplier, Model model) throws ValidationException {
 /*    try {
