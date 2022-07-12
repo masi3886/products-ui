@@ -3,8 +3,9 @@ package lt.bit.products.ui.controller;
 import static lt.bit.products.ui.controller.ControllerBase.ADMIN_PATH;
 import static lt.bit.products.ui.controller.UserController.USERS_PATH;
 
+import java.security.AccessControlException;
 import java.util.List;
-import lt.bit.products.ui.model.Supplier;
+import java.util.Locale;
 import lt.bit.products.ui.model.User;
 import lt.bit.products.ui.service.UserService;
 import lt.bit.products.ui.service.domain.UserRole;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(ADMIN_PATH + USERS_PATH)
@@ -56,7 +59,7 @@ class UserController extends ControllerBase {
   }
 
   @GetMapping("/add")
-  String addSupplier(Model model) {
+  String addUser(Model model) {
     if (!userService.isAuthenticated()) {
       return "login";
     }
@@ -78,6 +81,20 @@ class UserController extends ControllerBase {
       return "productForm";
     }*/
     userService.saveUser(user);
+    return "redirect:" + ADMIN_PATH + USERS_PATH;
+  }
+
+  @GetMapping("/delete")
+  String deleteUser(@RequestParam Integer id, RedirectAttributes redirectAttributes) {
+    if (!userService.isAuthenticated()) {
+      return "login";
+    }
+
+    try {
+      userService.deleteUser(id);
+    } catch (AccessControlException e) {
+      redirectAttributes.addFlashAttribute("errorMsg", messages.getMessage(e.getMessage(), null, Locale.getDefault()));
+    }
     return "redirect:" + ADMIN_PATH + USERS_PATH;
   }
 }

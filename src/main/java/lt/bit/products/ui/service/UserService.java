@@ -1,5 +1,6 @@
 package lt.bit.products.ui.service;
 
+import java.security.AccessControlException;
 import java.util.List;
 import java.util.Optional;
 import lt.bit.products.ui.model.User;
@@ -92,5 +93,13 @@ public class UserService {
 
   public void saveUser(User user) {
     repository.save(mapper.map(user, UserEntity.class));
+  }
+
+  public void deleteUser(Integer id) {
+    Optional<UserEntity> user = repository.findById(id);
+    if (user.filter(u -> u.getRole() == UserRole.ADMIN).isPresent()) {
+      throw new AccessControlException("permission.error.ADMIN_USER_DELETION");
+    }
+    repository.deleteById(id);
   }
 }
