@@ -39,9 +39,7 @@ public class UserService {
       setAdmin(u.getRole() == UserRole.ADMIN);
       setUserId(u.getId());
       setUserName(u.getUsername());
-
-      u.setLoggedInAt(LocalDateTime.now());
-      repository.save(u);
+      repository.updateLastLoginTime(LocalDateTime.now());
     });
   }
 
