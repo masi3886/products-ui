@@ -76,17 +76,12 @@ class UserController extends ControllerBase {
   }
 
   @PostMapping("/save")
-  String saveUser(@ModelAttribute User user, Model model) throws ValidationException {
-/*    try {
-      validator.validate(product);
-    } catch (ValidationException e) {
-      model.addAttribute("errorMsg",
-          messages.getMessage("validation.error." + e.getCode(), e.getParams(),
-              Locale.getDefault()));
-      model.addAttribute("productItem", product);
-      return "productForm";
-    }*/
-    userService.saveUser(user);
+  String saveUser(@ModelAttribute User editedUser, Model model) throws ValidationException {
+    User existingUser = userService.getUser(editedUser.getId());
+    existingUser.setUsername(editedUser.getUsername());
+    existingUser.setRole(editedUser.getRole());
+    existingUser.setStatus(editedUser.getStatus());
+    userService.saveUser(existingUser);
     return "redirect:" + ADMIN_PATH + USERS_PATH;
   }
 

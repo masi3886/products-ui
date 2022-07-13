@@ -1,6 +1,7 @@
 package lt.bit.products.ui.service;
 
 import java.security.AccessControlException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lt.bit.products.ui.model.User;
@@ -38,6 +39,9 @@ public class UserService {
       setAdmin(u.getRole() == UserRole.ADMIN);
       setUserId(u.getId());
       setUserName(u.getUsername());
+
+      u.setLoggedInAt(LocalDateTime.now());
+      repository.save(u);
     });
   }
 
