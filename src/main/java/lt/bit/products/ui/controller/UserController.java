@@ -48,11 +48,17 @@ class UserController extends ControllerBase {
   }
 
   @GetMapping("/{id}")
-  String editUser(@PathVariable Integer id, Model model) {
+  String editUser(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
     if (!userService.isAuthenticated()) {
       return "login";
     }
-    model.addAttribute("user", userService.getUser(id));
+
+    try {
+      model.addAttribute("user", userService.getUser(id));
+    } catch (AccessControlException e) {
+      redirectAttributes.addFlashAttribute("errorMsg", messages.getMessage(e.getMessage(), null, Locale.getDefault()));
+      return "redirect:" + ADMIN_PATH + USERS_PATH;
+    }
     model.addAttribute("roles", UserRole.values());
     model.addAttribute("statuses", UserStatus.values());
     return "admin/userForm";
