@@ -8,8 +8,6 @@ import lt.bit.products.ui.model.User;
 import lt.bit.products.ui.service.domain.UserEntity;
 import lt.bit.products.ui.service.domain.UserRepository;
 import lt.bit.products.ui.service.domain.UserRole;
-import lt.bit.products.ui.service.error.ErrorCode;
-import lt.bit.products.ui.service.error.ValidationException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
@@ -99,10 +97,7 @@ public class UserService {
     return user.map(u -> mapper.map(u, User.class)).orElseThrow();
   }
 
-  public void saveUser(User user) throws ValidationException {
-    if (!user.getPassword().equals(user.getConfirmedPassword())) {
-      throw new ValidationException(ErrorCode.PASSWORDS_DO_NOT_MATCH);
-    }
+  public void saveUser(User user) {
     repository.save(mapper.map(user, UserEntity.class));
   }
 
