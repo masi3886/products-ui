@@ -78,6 +78,6 @@ class CustomerSiteController {
     newUser.setRole(UserRole.USER);
     newUser.setStatus(UserStatus.INACTIVE);
     userService.saveUser(newUser);
-    return "registrationForm";
+    return "redirect:/";
   }
 }

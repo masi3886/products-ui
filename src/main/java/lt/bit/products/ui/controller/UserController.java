@@ -123,4 +123,16 @@ class UserController extends ControllerBase {
     }
     return "redirect:" + ADMIN_PATH + USERS_PATH;
   }
+
+  @GetMapping("/activate")
+  String activateUser(@RequestParam Integer id, RedirectAttributes redirectAttributes) {
+    if (!userService.isAuthenticated()) {
+      return "login";
+    }
+    User user = userService.getUser(id);
+    user.setStatus(UserStatus.ACTIVE);
+    userService.saveUser(user);
+
+    return "redirect:" + ADMIN_PATH + USERS_PATH;
+  }
 }

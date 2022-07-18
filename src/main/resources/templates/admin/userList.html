@@ -28,6 +28,7 @@
       <td th:if="${item.role.toString()} == 'USER'">
         <a th:href="@{'/admin/users/' + ${item.id}}">Edit</a>
         <a th:href="@{'/admin/users/delete?id=' + ${item.id}}" onclick="return confirm('Are you sure?')">Delete</a>
+        <a th:href="@{'/admin/users/activate?id=' + ${item.id}}" onclick="return confirm('Are you sure?')">Activate</a>
       </td>
       <td th:unless="${item.role.toString()} == 'USER'">&nbsp;</td>
 
