@@ -83,7 +83,10 @@
   });
 </script>
 <div class="container">
-  <div class="row">
+  <div class="row" th:if="${authenticated}">
+    <a style="width: 100px" href="/auth/logout">Sign Out</a>
+  </div>
+  <div class="row" th:unless="${authenticated}">
     <a style="width: 80px" href="/auth/login">Sign In</a> | <a style="width: 80px" href="/register">Sign Up</a>
   </div>
   <br>
