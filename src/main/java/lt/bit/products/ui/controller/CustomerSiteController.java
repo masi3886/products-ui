@@ -1,6 +1,7 @@
 package lt.bit.products.ui.controller;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.UUID;
 import lt.bit.products.ui.model.User;
 import lt.bit.products.ui.model.UserProfile;
@@ -8,8 +9,11 @@ import lt.bit.products.ui.service.CartService;
 import lt.bit.products.ui.service.UserService;
 import lt.bit.products.ui.service.domain.UserRole;
 import lt.bit.products.ui.service.domain.UserStatus;
+import lt.bit.products.ui.service.error.UserValidator;
+import lt.bit.products.ui.service.error.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +30,15 @@ class CustomerSiteController {
   private final static Logger LOG = LoggerFactory.getLogger(CustomerSiteController.class);
   private final CartService cartService;
   private final UserService userService;
+  private final UserValidator userValidator;
+  private final MessageSource messages;
 
-  CustomerSiteController(CartService cartService, UserService userService) {
+  CustomerSiteController(CartService cartService, UserService userService,
+      UserValidator userValidator, MessageSource messages) {
     this.cartService = cartService;
     this.userService = userService;
+    this.userValidator = userValidator;
+    this.messages = messages;
   }
 
   @PostMapping("/cart/add")
@@ -92,7 +101,14 @@ class CustomerSiteController {
 
   @PostMapping("/profile")
   String submitRegistrationForm(@ModelAttribute UserProfile updatedProfile, Model model) {
-    userService.saveUserProfile(updatedProfile);
+    try {
+      userValidator.validate(updatedProfile);
+      userService.saveUserProfile(updatedProfile);
+    } catch (ValidationException e) {
+      model.addAttribute("errorMsg", messages.getMessage("validation.error." + e.getCode(), null, Locale.getDefault()));
+      model.addAttribute("profileData", updatedProfile);
+      return "profile";
+    }
     return "redirect:/";
   }
 }
