@@ -25,8 +25,8 @@ public class UserService {
 
   private boolean authenticated;
   private boolean admin;
-  private Integer userId;
-  private String userName;
+  private Integer currentUserId;
+  private String currentUsername;
 
   public UserService(UserRepository repository, ModelMapper mapper) {
     this.repository = repository;
@@ -38,8 +38,8 @@ public class UserService {
     user.ifPresent(u -> {
       setAuthenticated(true);
       setAdmin(u.getRole() == UserRole.ADMIN);
-      setUserId(u.getId());
-      setUserName(u.getUsername());
+      setCurrentUserId(u.getId());
+      setCurrentUsername(u.getUsername());
       repository.updateLastLoginTime(LocalDateTime.now());
     });
   }
@@ -47,8 +47,8 @@ public class UserService {
   public void logout() {
     setAuthenticated(false);
     setAdmin(false);
-    setUserId(null);
-    setUserName(null);
+    setCurrentUserId(null);
+    setCurrentUsername(null);
   }
 
   public boolean isAuthenticated() {
@@ -67,20 +67,20 @@ public class UserService {
     this.admin = admin;
   }
 
-  public Integer getUserId() {
-    return userId;
+  public Integer getCurrentUserId() {
+    return currentUserId;
   }
 
-  private void setUserId(Integer userId) {
-    this.userId = userId;
+  private void setCurrentUserId(Integer currentUserId) {
+    this.currentUserId = currentUserId;
   }
 
-  public String getUserName() {
-    return userName;
+  public String getCurrentUsername() {
+    return currentUsername;
   }
 
-  private void setUserName(String userName) {
-    this.userName = userName;
+  private void setCurrentUsername(String currentUsername) {
+    this.currentUsername = currentUsername;
   }
 
   public List<User> getUsers() {
