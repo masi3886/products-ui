@@ -108,6 +108,12 @@ public class UserService {
     return mapper.map(profileRepository.findById(userId).orElseGet(UserProfileEntity::new), UserProfile.class);
   }
 
+  public void saveUserProfile(UserProfile updatedProfile) {
+    UserProfileEntity profileEntity = mapper.map(updatedProfile, UserProfileEntity.class);
+    profileEntity.setUserId(getCurrentUserId());
+    profileRepository.save(profileEntity);
+  }
+
   public void saveUser(User user) {
     UserEntity savedUser = repository.save(mapper.map(user, UserEntity.class));
     UserProfileEntity profile = mapper.map(user.getProfile(), UserProfileEntity.class);

@@ -89,4 +89,10 @@ class CustomerSiteController {
     model.addAttribute("profileData", profile);
     return "profile";
   }
+
+  @PostMapping("/profile")
+  String submitRegistrationForm(@ModelAttribute UserProfile updatedProfile, Model model) {
+    userService.saveUserProfile(updatedProfile);
+    return "redirect:/";
+  }
 }
