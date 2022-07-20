@@ -80,4 +80,10 @@ class CustomerSiteController {
     userService.saveUser(newUser);
     return "redirect:/";
   }
+
+  @GetMapping("/profile")
+  String showProfile(Model model) {
+    //model.addAttribute("profileData", );
+    return "profile";
+  }
 }
