@@ -86,7 +86,7 @@
   <div class="row" th:if="${authenticated}">
     <div class="col">
       <b th:text="${currentUsername + ':'}"></b>
-      <a style="width: 100px" href="/auth/logout">Sign Out</a>
+      <a style="width: 80px" href="/profile">Profile</a> | <a style="width: 100px" href="/auth/logout">Sign Out</a>
     </div>
   </div>
   <div class="row" th:unless="${authenticated}">
