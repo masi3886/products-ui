@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lt.bit.products.ui.model.User;
+import lt.bit.products.ui.model.UserProfile;
 import lt.bit.products.ui.service.domain.UserEntity;
 import lt.bit.products.ui.service.domain.UserProfileEntity;
 import lt.bit.products.ui.service.domain.UserProfileRepository;
@@ -101,6 +102,10 @@ public class UserService {
       throw new AccessControlException("permission.error.ADMIN_USER_EDITING");
     }
     return user.map(u -> mapper.map(u, User.class)).orElseThrow();
+  }
+
+  public UserProfile getUserProfile(Integer userId) {
+    return mapper.map(profileRepository.findById(userId), UserProfile.class);
   }
 
   public void saveUser(User user) {
