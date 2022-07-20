@@ -3,6 +3,7 @@ package lt.bit.products.ui.controller;
 import java.math.BigDecimal;
 import java.util.UUID;
 import lt.bit.products.ui.model.User;
+import lt.bit.products.ui.model.UserProfile;
 import lt.bit.products.ui.service.CartService;
 import lt.bit.products.ui.service.UserService;
 import lt.bit.products.ui.service.domain.UserRole;
@@ -83,7 +84,10 @@ class CustomerSiteController {
 
   @GetMapping("/profile")
   String showProfile(Model model) {
-    //model.addAttribute("profileData", );
+    Integer currentUserId = userService.getCurrentUserId();
+    User currentUser = userService.getUser(currentUserId);
+    UserProfile profile = currentUser.getProfile();
+    model.addAttribute("profileData", profile == null ? new UserProfile() : profile);
     return "profile";
   }
 }

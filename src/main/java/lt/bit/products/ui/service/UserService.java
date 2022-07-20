@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import lt.bit.products.ui.model.User;
 import lt.bit.products.ui.service.domain.UserEntity;
+import lt.bit.products.ui.service.domain.UserProfileEntity;
+import lt.bit.products.ui.service.domain.UserProfileRepository;
 import lt.bit.products.ui.service.domain.UserRepository;
 import lt.bit.products.ui.service.domain.UserRole;
 import lt.bit.products.ui.service.domain.UserStatus;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class UserService {
 
   private final UserRepository repository;
+  private final UserProfileRepository profileRepository;
   private final ModelMapper mapper;
 
   private boolean authenticated;
@@ -28,8 +31,10 @@ public class UserService {
   private Integer currentUserId;
   private String currentUsername;
 
-  public UserService(UserRepository repository, ModelMapper mapper) {
+  public UserService(UserRepository repository,
+      UserProfileRepository profileRepository, ModelMapper mapper) {
     this.repository = repository;
+    this.profileRepository = profileRepository;
     this.mapper = mapper;
   }
 
@@ -99,7 +104,10 @@ public class UserService {
   }
 
   public void saveUser(User user) {
-    repository.save(mapper.map(user, UserEntity.class));
+    UserEntity savedUser = repository.save(mapper.map(user, UserEntity.class));
+    UserProfileEntity profile = mapper.map(user.getProfile(), UserProfileEntity.class);
+    profile.setUserId(savedUser.getId());
+    profileRepository.save(profile);
   }
 
   public void deleteUser(Integer id) {
