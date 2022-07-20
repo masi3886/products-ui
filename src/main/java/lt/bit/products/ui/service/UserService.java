@@ -105,7 +105,7 @@ public class UserService {
   }
 
   public UserProfile getUserProfile(Integer userId) {
-    return mapper.map(profileRepository.findById(userId), UserProfile.class);
+    return mapper.map(profileRepository.findById(userId).orElseGet(UserProfileEntity::new), UserProfile.class);
   }
 
   public void saveUser(User user) {

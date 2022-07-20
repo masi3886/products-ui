@@ -85,9 +85,8 @@ class CustomerSiteController {
   @GetMapping("/profile")
   String showProfile(Model model) {
     Integer currentUserId = userService.getCurrentUserId();
-    User currentUser = userService.getUser(currentUserId);
-    UserProfile profile = currentUser.getProfile();
-    model.addAttribute("profileData", profile == null ? new UserProfile() : profile);
+    UserProfile profile = userService.getUserProfile(currentUserId);
+    model.addAttribute("profileData", profile);
     return "profile";
   }
 }
