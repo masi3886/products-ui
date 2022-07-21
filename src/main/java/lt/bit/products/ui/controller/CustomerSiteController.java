@@ -83,6 +83,7 @@ class CustomerSiteController {
     UserProfile userProfile = userService.isAuthenticated()
         ? userService.getUserProfile(userService.getCurrentUserId())
         : new UserProfile();
+    model.addAttribute("cartAmount", cartService.getCartAmount());
     model.addAttribute("profileData", userProfile);
     model.addAttribute("authenticated", userService.isAuthenticated());
     model.addAttribute("currentUsername", userService.getCurrentUsername());

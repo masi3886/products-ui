@@ -42,8 +42,8 @@
         <div class="row g-3"><br><br></div>
         <div class="row g-3">
           <div class="col-auto">
-            <button class="btn btn-primary mb-3" type="submit">Save</button>
-            <button class="btn btn-secondary mb-3" type="button" onclick="history.back()">Back</button>
+            <button type="button" class="btn btn-info" style="color: whitesmoke">Checkout (<span th:text="${cartAmount}"></span> &euro;)</button>
+            <button class="btn btn-secondary" type="button" onclick="history.back()">Back</button>
             <input type="hidden" >
           </div>
         </div>
