@@ -77,6 +77,12 @@ class CustomerSiteController {
     return mv;
   }
 
+  @GetMapping("/cart/checkout")
+  String showCheckoutForm(Model model) {
+    model.addAttribute("cartItems", cartService.getCartItems());
+    return "checkoutForm";
+  }
+
   @GetMapping("/register")
   String showRegistrationForm(Model model) {
     model.addAttribute("user", new User());
@@ -93,6 +99,9 @@ class CustomerSiteController {
 
   @GetMapping("/profile")
   String showProfile(Model model) {
+    if (!userService.isAuthenticated()) {
+      return "login";
+    }
     Integer currentUserId = userService.getCurrentUserId();
     UserProfile profile = userService.getUserProfile(currentUserId);
     model.addAttribute("profileData", profile);
