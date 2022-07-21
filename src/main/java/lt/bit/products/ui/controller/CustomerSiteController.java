@@ -96,6 +96,8 @@ class CustomerSiteController {
     Integer currentUserId = userService.getCurrentUserId();
     UserProfile profile = userService.getUserProfile(currentUserId);
     model.addAttribute("profileData", profile);
+    model.addAttribute("authenticated", userService.isAuthenticated());
+    model.addAttribute("currentUsername", userService.getCurrentUsername());
     return "profile";
   }
 

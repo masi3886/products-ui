@@ -83,15 +83,7 @@
   });
 </script>
 <div class="container">
-  <div class="row" th:if="${authenticated}">
-    <div class="col">
-      <b th:text="${currentUsername + ':'}"></b>
-      <a style="width: 80px" href="/profile">Profile</a> | <a style="width: 100px" href="/auth/logout">Sign Out</a>
-    </div>
-  </div>
-  <div class="row" th:unless="${authenticated}">
-    <a style="width: 80px" href="/auth/login">Sign In</a> | <a style="width: 80px" href="/register">Sign Up</a>
-  </div>
+  <div th:replace="fragments/user_navbar.html :: navbarParams(authenticated=${authenticated}, currentUsername=${currentUsername})"></div>
   <br>
   <div class="row">
     <button id="cartBtn" type="button" class="btn btn-outline-danger mb-3">

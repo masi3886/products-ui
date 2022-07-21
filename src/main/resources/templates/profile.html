@@ -3,8 +3,9 @@
 <head th:replace="fragments/head.html"></head>
 <body>
 <div class="container">
+  <div th:replace="fragments/user_navbar.html :: navbarParams(authenticated=${authenticated}, currentUsername=${currentUsername})"></div>
+  <br>
   <span style="color: #CC0000" th:text="${errorMsg}"></span>
-
   <form method="post" th:action="@{/profile}" th:object="${profileData}">
     <div class="row g-3">
       <div class="col-auto">
