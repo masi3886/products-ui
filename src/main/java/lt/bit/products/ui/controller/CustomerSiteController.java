@@ -80,6 +80,12 @@ class CustomerSiteController {
   @GetMapping("/cart/checkout")
   String showCheckoutForm(Model model) {
     model.addAttribute("cartItems", cartService.getCartItems());
+    UserProfile userProfile = userService.isAuthenticated()
+        ? userService.getUserProfile(userService.getCurrentUserId())
+        : new UserProfile();
+    model.addAttribute("profileData", userProfile);
+    model.addAttribute("authenticated", userService.isAuthenticated());
+    model.addAttribute("currentUsername", userService.getCurrentUsername());
     return "checkoutForm";
   }
 
