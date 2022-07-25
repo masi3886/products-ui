@@ -1,6 +1,7 @@
 package lt.bit.products.ui.service.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -24,7 +25,7 @@ public class OrderEntity {
 
   @ElementCollection
   @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
-  private List<OrderItem> items;
+  private List<OrderItem> items = new ArrayList<>();
 
   public String getId() {
     return id;
