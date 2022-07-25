@@ -1,6 +1,11 @@
 package lt.bit.products.ui.controller;
 
+import static java.util.stream.Collectors.toList;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +15,7 @@ import lt.bit.products.ui.service.CartService;
 import lt.bit.products.ui.service.OrderService;
 import lt.bit.products.ui.service.UserService;
 import lt.bit.products.ui.service.domain.OrderEntity;
+import lt.bit.products.ui.service.domain.OrderItem;
 import lt.bit.products.ui.service.domain.UserRole;
 import lt.bit.products.ui.service.domain.UserStatus;
 import lt.bit.products.ui.service.error.UserValidator;
@@ -95,11 +101,23 @@ class CustomerSiteController {
   @PostMapping("/cart/checkout")
   String submitCheckoutForm(HttpServletRequest request) {
     OrderEntity order = new OrderEntity();
-    order.setId(UUID.randomUUID().toString().substring(0, 18));
+    String id = UUID.randomUUID().toString().substring(0, 18);
+    String datePart = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    order.setId(datePart + id.substring(8));
     order.setCustomerName(request.getParameter("name"));
     order.setCustomerAddress(request.getParameter("address"));
     order.setCustomerEmail(request.getParameter("email"));
     order.setCustomerPhone(request.getParameter("phone"));
+
+    List<OrderItem> items = cartService.getCartItems().stream()
+        .map(cartItem -> {
+          OrderItem item = new OrderItem();
+          item.setProductId(cartItem.getProductId());
+          item.setQuantity(cartItem.getCount());
+          return item;
+        })
+        .collect(toList());
+    order.setItems(items);
     orderService.createOrder(order);
     return "redirect:/";
   }
