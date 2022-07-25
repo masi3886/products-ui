@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 class CustomerSiteController {
@@ -99,7 +100,7 @@ class CustomerSiteController {
   }
 
   @PostMapping("/cart/checkout")
-  String submitCheckoutForm(HttpServletRequest request) {
+  String submitCheckoutForm(HttpServletRequest request, RedirectAttributes redirectAttributes) {
     OrderEntity order = new OrderEntity();
     String id = UUID.randomUUID().toString().substring(0, 18);
     String datePart = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -119,6 +120,8 @@ class CustomerSiteController {
         .collect(toList());
     order.setItems(items);
     orderService.createOrder(order);
+    cartService.clearCartItems();
+    redirectAttributes.addFlashAttribute("successMsg", "Thank you! Your order has been placed.");
     return "redirect:/";
   }
 
