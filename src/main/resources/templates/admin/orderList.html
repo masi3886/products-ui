@@ -24,7 +24,9 @@
     <td th:text="${item.totalAmount + ' &euro;'}">
     <td th:text="${item.status}">
     <td>
-      &nbsp;
+    <a th:if="${item.status.toString() == 'NEW'}" th:href="@{'/admin/orders/confirm?id=' + ${item.id}}" style="color: forestgreen">Confirm</a>
+    <a th:if="${item.status.toString() == 'NEW'}" th:href="@{'/admin/orders/reject?id=' + ${item.id}}" style="color: darkred">Reject</a>
+    <a th:if="${item.status.toString() == 'CONFIRMED'}" th:href="@{'/admin/orders/complete?id=' + ${item.id}}" style="color: darkblue">Complete</a>
     </td>
   </tr>
 </table>
