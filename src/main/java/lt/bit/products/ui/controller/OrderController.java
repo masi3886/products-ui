@@ -25,10 +25,12 @@ class OrderController extends ControllerBase {
   }
 
   @GetMapping
-  String showProducts(Model model, HttpServletRequest request) {
+  String showOrders(Model model, HttpServletRequest request) {
     if (!userService.isAuthenticated()) {
       return "login";
     }
+
+    model.addAttribute("orders", service.getOrders());
     return "admin/orderList";
   }
 }
