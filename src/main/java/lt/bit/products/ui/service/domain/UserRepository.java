@@ -21,6 +21,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
   void updateLastLoginTime(LocalDateTime ts);
 
   @Modifying
-  @Query("update UserEntity u set u.status = ?1 where  u.id = ?2")
+  @Query("update UserEntity u set u.status = ?1 where u.id = ?2")
   void updateStatus(UserStatus status, Integer id);
 }

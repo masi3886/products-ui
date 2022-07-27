@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import lt.bit.products.ui.model.Order;
 import lt.bit.products.ui.service.domain.OrderEntity;
 import lt.bit.products.ui.service.domain.OrderRepository;
+import lt.bit.products.ui.service.domain.OrderStatus;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,5 +30,9 @@ public class OrderService {
     return repository.findAll().stream()
         .map(o -> mapper.map(o, Order.class))
         .collect(Collectors.toList());
+  }
+
+  public void changeStatus(OrderStatus newStatus, String orderId) {
+    repository.updateStatus(newStatus, orderId);
   }
 }
